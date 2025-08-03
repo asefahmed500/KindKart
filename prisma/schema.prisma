@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL")
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  icon  String
+  color String
+
+  // Relations
+  centerCategories CenterCategory[]
+
+  @@map("categories")
+}
+
+model DonationCenter {
+  id                  Int      @id @default(autoincrement())
+  name                String
+  address             String
+  city                String
+  state               String
+  zipCode             String   @map("zip_code")
+  latitude            Decimal  @db.Decimal(10, 8)
+  longitude           Decimal  @db.Decimal(11, 8)
+  phone               String?
+  email               String?
+  website             String?
+  hoursOfOperation    Json?    @map("hours_of_operation")
+  acceptedItems       String[] @map("accepted_items")
+  organizationType    String?  @map("organization_type")
+  description         String?
+  specialInstructions String?  @map("special_instructions")
+  isActive            Boolean  @default(true) @map("is_active")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  centerCategories CenterCategory[]
+
+  @@index([latitude, longitude])
+  @@index([city])
+  @@index([state])
+  @@map("donation_centers")
+}
+
+model CenterCategory {
+  centerId   Int @map("center_id")
+  categoryId Int @map("category_id")
+
+  // Relations
+  center   DonationCenter @relation(fields: [centerId], references: [id], onDelete: Cascade)
+  category Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([centerId, categoryId])
+  @@map("center_categories")
+}

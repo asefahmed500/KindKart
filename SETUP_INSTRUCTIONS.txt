@@ -1,0 +1,215 @@
+# KindKart - Complete Setup Instructions
+
+## 🚀 Quick Start Guide
+
+### Prerequisites
+- Node.js 18+ installed
+- Git installed
+- A Supabase account (free)
+
+### Step 1: Clone and Install
+\`\`\`bash
+git clone <your-repo-url>
+cd kindkart
+npm install
+\`\`\`
+
+### Step 2: Environment Setup
+\`\`\`bash
+# Copy environment template
+cp .env.example .env
+
+# Edit .env with your database URL
+nano .env
+\`\`\`
+
+Add your Supabase DATABASE_URL:
+\`\`\`env
+DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
+OPENCAGE_API_KEY=""  # Optional
+NEXTAUTH_SECRET="your-random-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+\`\`\`
+
+### Step 3: Database Setup
+
+#### Option A: Using Prisma (Recommended)
+\`\`\`bash
+npm run setup
+\`\`\`
+
+#### Option B: Using SQL Files
+\`\`\`bash
+npm run setup-sql
+\`\`\`
+
+### Step 4: Verify Setup
+\`\`\`bash
+npm run db:verify
+\`\`\`
+
+### Step 5: Start Development
+\`\`\`bash
+npm run dev
+\`\`\`
+
+Open http://localhost:3000 and test:
+- Search for "San Francisco, CA"
+- Try "90210"
+- Use "Use My Location" button
+- Filter by categories
+- Click on map markers
+
+## 🔧 Available Commands
+
+### Setup Commands
+\`\`\`bash
+npm run setup          # Complete setup with Prisma
+npm run setup-sql      # Setup using SQL files
+npm run db:verify      # Verify database setup
+\`\`\`
+
+### Database Commands
+\`\`\`bash
+npm run db:generate    # Generate Prisma client
+npm run db:push        # Push schema to database
+npm run db:seed        # Seed with sample data
+npm run db:setup-sql   # Run SQL setup files
+npm run db:studio      # Open database GUI
+npm run db:test        # Test database connection
+npm run db:reset       # Reset database (destructive)
+\`\`\`
+
+### Development Commands
+\`\`\`bash
+npm run dev           # Start development server
+npm run build         # Build for production
+npm run start         # Start production server
+npm run lint          # Run linting
+\`\`\`
+
+## 🗄️ Database Schema
+
+The application uses these tables:
+- `categories` - Donation categories (Food Banks, Clothing, etc.)
+- `donation_centers` - Individual donation centers
+- `center_categories` - Many-to-many relationship table
+
+## 🧪 Testing Your Setup
+
+### 1. Database Test
+\`\`\`bash
+npm run db:test
+\`\`\`
+Should show:
+- ✅ Database connection successful
+- ✅ Categories: 8 found
+- ✅ Donation Centers: 8+ found
+
+### 2. Application Test
+\`\`\`bash
+npm run dev
+\`\`\`
+Then test:
+- Search functionality
+- Map display
+- Filtering options
+- Center details
+
+### 3. API Test
+Visit these URLs:
+- http://localhost:3000/api/categories
+- http://localhost:3000/api/centers?lat=37.7749&lng=-122.4194&radius=25
+
+## 🚨 Troubleshooting
+
+### Database Connection Issues
+\`\`\`bash
+# Check environment variables
+cat .env
+
+# Test connection
+npm run db:test
+
+# Reset if needed
+npm run db:reset
+\`\`\`
+
+### Missing Data
+\`\`\`bash
+# Re-seed database
+npm run db:seed
+
+# Or use SQL files
+npm run db:setup-sql
+\`\`\`
+
+### Build Errors
+\`\`\`bash
+# Clean and rebuild
+rm -rf .next node_modules
+npm install
+npm run build
+\`\`\`
+
+### Prisma Issues
+\`\`\`bash
+# Regenerate client
+npm run db:generate
+
+# Reset schema
+npm run db:push --force-reset
+\`\`\`
+
+## 🌐 Production Deployment
+
+### Vercel Deployment
+1. Push to GitHub
+2. Connect to Vercel
+3. Add environment variables:
+   - `DATABASE_URL`
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL`
+4. Deploy
+
+### Environment Variables for Production
+\`\`\`env
+DATABASE_URL="your-production-database-url"
+OPENCAGE_API_KEY="your-api-key"  # Optional
+NEXTAUTH_SECRET="your-production-secret"
+NEXTAUTH_URL="https://your-domain.vercel.app"
+\`\`\`
+
+## 📊 Sample Data
+
+The application includes:
+- 8 donation categories
+- 8+ sample donation centers in SF Bay Area
+- Realistic hours, contact info, and accepted items
+- Proper category relationships
+
+## 🔐 Security Notes
+
+- Never commit .env files
+- Use strong NEXTAUTH_SECRET
+- Keep DATABASE_URL private
+- Use different secrets for production
+
+## 📞 Getting Help
+
+1. Check database connection: `npm run db:test`
+2. Verify setup: `npm run db:verify`
+3. Check browser console for errors
+4. Review Supabase dashboard for issues
+
+## ✅ Success Checklist
+
+Your setup is complete when:
+- [ ] `npm run db:test` passes
+- [ ] `npm run dev` starts without errors
+- [ ] Map loads with donation centers
+- [ ] Search returns results
+- [ ] Filters work properly
+- [ ] Center details display correctly
+
+🎉 You're ready to use KindKart!

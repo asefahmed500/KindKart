@@ -1,0 +1,27 @@
+# 🚀 KindKart - Complete Supabase Setup Guide
+
+This guide will help you set up KindKart with Supabase database in under 10 minutes!
+
+## 📋 Prerequisites
+- Node.js 18+ installed
+- Git installed
+- A Supabase account (free)
+
+## 🗄️ Step 1: Create Supabase Project
+
+1. Go to https://supabase.com
+2. Sign up/login with your GitHub account
+3. Click "New Project"
+4. Fill in project details:
+   - Name: "KindKart"
+   - Database Password: Create a strong password (SAVE THIS!)
+   - Region: Choose closest to you
+5. Click "Create new project"
+6. Wait 2-3 minutes for setup to complete
+
+## 🔗 Step 2: Get Database Connection String
+
+1. In your Supabase dashboard, go to Settings > Database
+2. Scroll down to "Connection string"
+3. Select "URI" tab
+4. Copy the connection string (looks like):
